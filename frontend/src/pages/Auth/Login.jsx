@@ -14,7 +14,7 @@ const Login = () => {
 
   const [login, { isLoading }] = useLoginMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const userInfo = useSelector((state) => state.auth.userInfo);
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -26,13 +26,25 @@ const Login = () => {
     }
   }, [navigate, redirect, userInfo]);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await login({ email, password });
+      console.log(res);
+      dispatch(setCredentials(res.data));
+    } catch (error) {
+      toast.error(error?.data?.message || error.message);
+    }
+  };
+
   return (
     <div>
       <section className="pl-[10rem] flex flex-wrap">
         <div className="mr-[4rem] mt-[5rem]">
           <h1 className="text-2xl font-semibold mb-4">Sign In</h1>
 
-          <form className="container w-[40rem]">
+          <form className="container w-[40rem]" onSubmit={submitHandler}>
             <div className="my-[2rem]">
               <label
                 htmlFor="email"
@@ -44,7 +56,7 @@ const Login = () => {
               <input
                 type="email"
                 id="email"
-                className="mt-1 p-2 border rounded w-full outline-none bg-gray-700"
+                className="mt-1 p-2 border rounded w-full text-white bg-gray-700"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -60,7 +72,7 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
-                className="mt-1 p-2 border rounded w-full outline-none bg-gray-700"
+                className="mt-1 p-2 border rounded w-full text-white bg-gray-700"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
