@@ -3,7 +3,8 @@ import Product from "../models/productModel.js";
 
 const addProuct = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand, image } =
+      req.fields;
 
     switch (true) {
       case !name:
@@ -30,7 +31,8 @@ const addProuct = asyncHandler(async (req, res) => {
 
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand, image } =
+      req.fields;
 
     switch (true) {
       case !name:
@@ -48,8 +50,7 @@ const updateProductDetails = asyncHandler(async (req, res) => {
     }
     const product = await Product.findByIdAndUpdate(
       { _id: req.params.id },
-      { ...req.fields },
-      { new: true }
+      { ...req.fields }
     );
 
     await product.save();
@@ -92,18 +93,18 @@ const fetchProducts = asyncHandler(async (req, res) => {
   }
 });
 
-const fetchProductsById = asyncHandler(async (req, res) => {
+const fetchProductById = asyncHandler(async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-
-    if (product) return res.json(product);
-    else {
+    if (product) {
+      return res.json(product);
+    } else {
       res.status(404);
-      throw new Error("Product Not Found");
+      throw new Error("Product not found");
     }
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Product not  found" });
+    res.status(404).json({ error: "Product not found" });
   }
 });
 
@@ -180,14 +181,31 @@ const fetchNewProducts = asyncHandler(async (req, res) => {
   }
 });
 
+const filterProducts = asyncHandler(async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
+
+    const products = await Product.find(args);
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
 export {
   addProuct,
   updateProductDetails,
   removeProduct,
   fetchProducts,
-  fetchProductsById,
+  fetchProductById,
   fetchAllProduct,
   addProductReview,
   fetchTopProducts,
   fetchNewProducts,
+  filterProducts,
 };

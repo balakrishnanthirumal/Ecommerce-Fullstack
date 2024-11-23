@@ -7,11 +7,12 @@ import {
   updateProductDetails,
   removeProduct,
   fetchProducts,
-  fetchProductsById,
+  fetchProductById,
   fetchAllProduct,
   addProductReview,
   fetchTopProducts,
   fetchNewProducts,
+  filterProducts,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -26,10 +27,12 @@ router.route("/allproducts").get(fetchAllProduct);
 router.route("/top").get(fetchTopProducts);
 router.get("/new", fetchNewProducts);
 
+router.route("/filtered-products").post(filterProducts);
+
 router
   .route("/:id")
   .put(authenticate, authorizeAdmin, formidable(), updateProductDetails)
-  .get(fetchProductsById)
+  .get(fetchProductById)
   .delete(authenticate, authorizeAdmin, removeProduct);
 
 router
