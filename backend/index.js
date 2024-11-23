@@ -17,7 +17,7 @@ connectDB();
 const app = express();
 app.use(
   cors({
-    origin: ["https://ecommerce-fullstack-xb76.vercel.app/"],
+    origin: ["https://ecommerce-fullstack-abb1.vercel.app/"],
     methods: ["POST", "PUT", "DELETE", "GET"],
     credentials: true,
   })
