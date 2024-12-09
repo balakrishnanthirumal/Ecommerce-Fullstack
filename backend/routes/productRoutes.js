@@ -20,7 +20,7 @@ const router = express.Router();
 router
   .route("/")
   .get(fetchProducts)
-  .post( authorizeAdmin, formidable(), addProuct);
+  .post( formidable(), addProuct);
 
 router.route("/allproducts").get(fetchAllProduct);
 
@@ -31,12 +31,12 @@ router.route("/filtered-products").post(filterProducts);
 
 router
   .route("/:id")
-  .put( authorizeAdmin, formidable(), updateProductDetails)
+  .put(  formidable(), updateProductDetails)
   .get(fetchProductById)
-  .delete( authorizeAdmin, removeProduct);
+  .delete( removeProduct);
 
 router
   .route("/:id/reviews")
-  .post( authorizeAdmin, checkId, addProductReview);
+  .post( checkId, addProductReview);
 
 export default router;
