@@ -16,7 +16,7 @@ connectDB();
 
 const app = express();
 const corsOptions = {
-  origin: "https://balexstore-frontend-obzb.onrender.com", // Replace with your frontend domain
+  origin: "https://balexstore-frontend.onrender.com", // Replace with your frontend domain
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
