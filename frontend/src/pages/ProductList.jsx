@@ -7,8 +7,10 @@ import {
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
 import AdminMenu from "./Admin/AdminMenu.jsx";
+import Loader from "../components/Loader.jsx";
+import axios from "axios";
 const ProductList = () => {
-  const { image, setImage } = useState("");
+  const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -17,6 +19,7 @@ const ProductList = () => {
   const [brand, setBrand] = useState("");
   const [stock, setStock] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [uploadProductImage] = useUploadProductImageMutation();
@@ -47,20 +50,34 @@ const ProductList = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
       toast.error(error);
     }
   };
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
+    console.log(e.target.files[0]);
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", "images_preset");
 
     try {
-      const res = await uploadProductImage(formData).unwrap();
+      // const res = await uploadProductImage(formData).unwrap();
+      let api = "https://api.cloudinary.com/v1_1/dbfahboiz/image/upload";
+      // const res = await fetch(
+      //   "https://api.cloudinary.com/v1_1/dbfahboiz/image/upload",
+      //   {
+      //     method: "POST",
+      //     body: formData,
+      //   }
+      // );
+      setLoading(true);
+      const res = await axios.post(api, formData);
+      const { secure_url } = res.data;
       toast.success(res.message);
-      setImageUrl(res.image);
-      setImage(res.image);
+      setImage(secure_url);
+
+      setImageUrl(secure_url);
+      setLoading(false);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
@@ -71,19 +88,22 @@ const ProductList = () => {
       <AdminMenu />
       <div className="md:w-3/4 p-3">
         <div className="h-12">Create Product</div>
-
-        {imageUrl && (
-          <div className="text-center">
-            <img
-              src={imageUrl}
-              alt="product"
-              className="block mx-auto max-h-[200px]"
-            />
-          </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          imageUrl && (
+            <div className="text-center">
+              <img
+                src={imageUrl}
+                alt="product"
+                className="block mx-auto max-h-[200px]"
+              />
+            </div>
+          )
         )}
 
         <div className="mb-3">
-          <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+          <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11 ">
             {image ? image.name : "Upload Image"}
 
             <input

@@ -23,6 +23,7 @@ const AllProducts = () => {
               All Products ({products.length})
             </div>
             <div className="flex flex-wrap justify-around items-center">
+              {console.log(products)}
               {products.map((product) => (
                 <Link
                   key={product._id}

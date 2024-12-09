@@ -52,7 +52,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
 
     uploadProductImage: builder.mutation({
       query: (data) => ({
-        url: `${UPLOAD_URL}`,
+        url: `https://api.cloudinary.com/v1_1/dbfahboiz/image/upload`,
         method: "POST",
         body: data,
       }),

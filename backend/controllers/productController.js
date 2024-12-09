@@ -19,6 +19,8 @@ const addProuct = asyncHandler(async (req, res) => {
         return res.json({ error: "category is requires" });
       case !quantity:
         return res.json({ error: "Quantity is requires" });
+      case !image:
+        return res.json({ error: "Image is required" });
     }
 
     const product = await new Product({ ...req.fields }).save();
