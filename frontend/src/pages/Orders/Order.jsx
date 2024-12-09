@@ -99,7 +99,7 @@ const Order = () => {
             <Messsage>Order is empty</Messsage>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-[80%]">
+              <table className="w-[80%] mx-auto">
                 <thead className="border-b-2">
                   <tr>
                     <th className="p-2">Image</th>
