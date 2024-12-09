@@ -9,13 +9,13 @@ import {
   readCategory,
 } from "../controllers/categoryController.js";
 
-router.route("/").post( authorizeAdmin, createCategory);
+router.route("/").post( createCategory);
 
 router
   .route("/:categoryId")
-  .put( authorizeAdmin, updatCategory)
+  .put( updatCategory)
 
-  .delete( authorizeAdmin, deleteCategory);
+  .delete( deleteCategory);
 
 router.route("/categories").get(listCategory);
 router.route("/:id").get(readCategory);
