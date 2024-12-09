@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
-  "proxy": "https://balexstore-backend.onrender.com",
+  "proxy": "https://balexstore-backend-eaq7.onrender.com",
   "scripts": {
     "backend": "nodemon backend/index.js",
     "frontend": "npm run dev --prefix frontend",
