@@ -15,13 +15,13 @@ const port = process.env.PORT || 3000;
 connectDB();
 
 const app = express();
-app.use(
-  cors({
-    origin: ["https://ecommerce-fullstack-abb1.vercel.app/"],
-    methods: ["POST", "PUT", "DELETE", "GET"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: "https://balexstore-frontend-obzb.onrender.com", // Replace with your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
