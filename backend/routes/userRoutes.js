@@ -28,8 +28,8 @@ router
 // Admin ROuters
 router
   .route("/:id")
-  .delete( authorizeAdmin, deleteUserById)
-  .get( authorizeAdmin, getUserById)
-  .put( authorizeAdmin, updateUserById);
+  .delete( deleteUserById)
+  .get(  getUserById)
+  .put( updateUserById);
 
 export default router;
