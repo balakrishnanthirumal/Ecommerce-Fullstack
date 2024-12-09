@@ -18,7 +18,7 @@ import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 router
   .route("/")
   .post( createOrder)
-  .get( authorizeAdmin, getAllOrders);
+  .get( getAllOrders);
 
 router.route("/mine").get( getUserOrders);
 router.route("/total-orders").get(countTotalOrders);
@@ -28,6 +28,6 @@ router.route("/:id").get( findOrderById);
 router.route("/:id/pay").put( markOrderAsPaid);
 router
   .route("/:id/deliver")
-  .put( authorizeAdmin, markOrderAsDelivered);
+  .put( markOrderAsDelivered);
 
 export default router;
