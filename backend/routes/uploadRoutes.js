@@ -5,7 +5,7 @@ import fs from "fs";
 
 const router = express.Router();
 
-const uploadDir = "backend/uploads/";
+const uploadDir = "uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
@@ -33,7 +33,7 @@ router.post("/", upload.single("image"), (req, res) => {
   if (req.file) {
     res.status(200).send({
       message: "Image uploaded successfully",
-      image: `./${req.file.path}`,
+      image: `/${req.file.path}`,
     });
   } else {
     res.status(400).send({ message: "No file uploaded" });
