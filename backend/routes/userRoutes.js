@@ -17,19 +17,19 @@ const router = express.Router();
 router
   .route("/")
   .post(createUser)
-  .get(authenticate, authorizeAdmin, getAllUsers);
+  .get( authorizeAdmin, getAllUsers);
 router.post("/auth", loginUser);
 router.post("/logout", logoutCurrentUser);
 router
   .route("/profile")
-  .get(authenticate, getCurrentUserProfile)
-  .put(authenticate, updateCurrentUserProfile);
+  .get( getCurrentUserProfile)
+  .put( updateCurrentUserProfile);
 
 // Admin ROuters
 router
   .route("/:id")
-  .delete(authenticate, authorizeAdmin, deleteUserById)
-  .get(authenticate, authorizeAdmin, getUserById)
-  .put(authenticate, authorizeAdmin, updateUserById);
+  .delete( authorizeAdmin, deleteUserById)
+  .get( authorizeAdmin, getUserById)
+  .put( authorizeAdmin, updateUserById);
 
 export default router;
