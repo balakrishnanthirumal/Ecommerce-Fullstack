@@ -101,7 +101,7 @@ const AdminDashboard = () => {
 
             <p className="mt-5">Sales</p>
             <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : sales.totalSales.toFixed(2)}
+              Rs {isLoading ? <Loader /> : sales.totalSales.toFixed(2)}
             </h1>
           </div>
           <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
